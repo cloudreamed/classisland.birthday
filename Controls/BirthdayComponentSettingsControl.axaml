@@ -1,0 +1,83 @@
+<controls:ComponentBase x:TypeArguments="models:BirthdayComponentSettings"
+                        x:Class="BirthdayBoard.Controls.BirthdayComponentSettingsControl"
+                        xmlns="https://github.com/avaloniaui"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                        xmlns:models="clr-namespace:BirthdayBoard.Models"
+                        xmlns:controls="clr-namespace:ClassIsland.Core.Abstractions.Controls;assembly=ClassIsland.Core"
+                        mc:Ignorable="d"
+                        d:DesignHeight="450" d:DesignWidth="800">
+    <ScrollViewer>
+        <!-- 不使用 AncestorType=local:... 绑定：DataContext 由后台在挂载时指向自身。 -->
+        <StackPanel Classes="component-settings-container animated-intro"
+                    Spacing="8">
+            <TextBlock Text="生日名单" FontWeight="SemiBold" />
+            <TextBlock Text="每行填一位同学的公历出生日期，右侧下拉框选择按公历还是农历过生日。选「农历」时会用出生年份自动换算成农历月日；闰月一律按普通月算。"
+                       Opacity="0.7"
+                       TextWrapping="Wrap" />
+
+            <ItemsControl ItemsSource="{Binding Settings.Entries}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*,78,56,56,76,Auto" Margin="0,4">
+                            <TextBox Grid.Column="0"
+                                     Watermark="姓名"
+                                     MinWidth="80"
+                                     Text="{Binding Name, Mode=TwoWay}" />
+                            <ComboBox Grid.Column="1"
+                                      Margin="8,0,0,0"
+                                      ItemsSource="{Binding YearOptions}"
+                                      SelectedItem="{Binding Year, Mode=TwoWay}" />
+                            <ComboBox Grid.Column="2"
+                                      Margin="6,0,0,0"
+                                      ItemsSource="{Binding MonthOptions}"
+                                      SelectedItem="{Binding Month, Mode=TwoWay}" />
+                            <ComboBox Grid.Column="3"
+                                      Margin="6,0,0,0"
+                                      ItemsSource="{Binding DayOptions}"
+                                      SelectedItem="{Binding Day, Mode=TwoWay}" />
+                            <ComboBox Grid.Column="4"
+                                      Margin="6,0,0,0"
+                                      SelectedIndex="{Binding CelebrateLunarIndex, Mode=TwoWay}">
+                                <ComboBoxItem Content="公历" />
+                                <ComboBoxItem Content="农历" />
+                            </ComboBox>
+                            <Button Grid.Column="5"
+                                    Content="删除"
+                                    Margin="8,0,0,0"
+                                    Padding="8,2"
+                                    Theme="{StaticResource TransparentButton}"
+                                    Click="DeleteEntry_Click"
+                                    Tag="{Binding}" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <Button Content="添加生日记录"
+                        Padding="12,4"
+                        Click="AddEntry_Click" />
+                <Button Content="从 txt 导入"
+                        Padding="12,4"
+                        Click="ImportFromFile_Click" />
+            </StackPanel>
+            <TextBlock x:Name="ImportStatusText"
+                       Opacity="0.7"
+                       TextWrapping="Wrap"
+                       IsVisible="False" />
+
+            <TextBlock Text="倒计时上限" FontWeight="SemiBold" Margin="0,8,0,0" />
+            <StackPanel Orientation="Horizontal" Spacing="6">
+                <TextBlock Text="最近生日超过"
+                           VerticalAlignment="Center" />
+                <TextBox x:Name="MaxCountdownBox"
+                         Width="56"
+                         TextChanged="MaxCountdownBox_TextChanged" />
+                <TextBlock Text="天就不显示（0 = 不限制）"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</controls:ComponentBase>

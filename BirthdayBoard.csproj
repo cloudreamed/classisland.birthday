@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <CreateCipx>true</CreateCipx>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ClassIslandPluginSdkVersion>2.1.0.1</ClassIslandPluginSdkVersion>
+    <!-- SDK 的打包脚本默认调用 pwsh，但本机只有 Windows PowerShell。 -->
+    <PowershellBinaryName>powershell</PowershellBinaryName>
+    <!-- x:Class 视图走编译期 XAML 加载，不依赖运行时反射构造，此警告可安全忽略。 -->
+    <NoWarn>$(NoWarn);AVLN3001</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClassIsland.PluginSdk" Version="$(ClassIslandPluginSdkVersion)">
+      <ExcludeAssets>runtime; native</ExcludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="manifest.yml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,18 @@
+<controls:ComponentBase x:TypeArguments="models:BirthdayComponentSettings"
+                        x:Class="BirthdayBoard.Controls.BirthdayComponent"
+                        xmlns="https://github.com/avaloniaui"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                        xmlns:models="clr-namespace:BirthdayBoard.Models"
+                        xmlns:controls="clr-namespace:ClassIsland.Core.Abstractions.Controls;assembly=ClassIsland.Core"
+                        mc:Ignorable="d"
+                        d:DesignHeight="450" d:DesignWidth="800">
+    <Grid VerticalAlignment="Center">
+        <!-- 不使用 $parent[local:...] 绑定：插件程序集在独立加载上下文中，按类型名解析会失败。 -->
+        <TextBlock x:Name="DisplayTextBlock"
+                   TextWrapping="Wrap"
+                   TextAlignment="Center"
+                   HorizontalAlignment="Center" />
+    </Grid>
+</controls:ComponentBase>
